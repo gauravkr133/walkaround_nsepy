@@ -8,12 +8,12 @@ niftyFiftyDataFrame = pd.read_csv('ind_nifty50list.csv')
 
 
 def getallniftyfiftycompanies():
-    return niftyFiftyDataFrame.to_json(orient='records', lines=True, indent=2)
+    return niftyFiftyDataFrame.to_json(orient='records', index=True, indent=2)
 
 
 def getCompanyDetails(companysymbol):
     companydataframe = niftyFiftyDataFrame[niftyFiftyDataFrame["Symbol"] == companysymbol]
-    return companydataframe.to_json(orient='records', lines=True, indent=2)
+    return companydataframe.to_json(orient='records', index=True, indent=2)
 
 
 def writeStocksDataToCsv(startDate, endDate):
@@ -36,27 +36,26 @@ def writeSingleStockDataToCsv(companysymbol, startDate, endDate):
 
 def getHistoryDataOfCompany(companysymbol, startDate, endDate):
     stockData = get_history(symbol=companysymbol, start=dateUtils.getDate(startDate), end=dateUtils.getDate(endDate))
-    return stockData.reset_index().to_json(orient='records', lines=True, indent=2, index=True, date_format='iso')
+    return stockData.reset_index().to_json(orient='records', indent=2, index=True, date_format='iso')
 
 
 def getOpenEqualHighList():
     openEqualHighDataframe = pd.read_csv('txt/openEqualHigh.txt')
-    return openEqualHighDataframe.to_json(orient='records', lines=True, indent=2)
+    return openEqualHighDataframe.to_json(orient='records', indent=2)
 
 
 def getOpenEqualHigh(companysymbol, startDate, endDate):
     stockData = get_history(symbol=companysymbol, start=dateUtils.getDate(startDate), end=dateUtils.getDate(endDate))
     openEqualHighData = stockData[stockData["Open"] == stockData["High"]]
-    return openEqualHighData.reset_index().to_json(orient='records', lines=True, indent=2, index=True,
-                                                   date_format='iso')
+    return openEqualHighData.reset_index().to_json(orient='records', indent=2, index=True, date_format='iso')
 
 
 def getOpenEqualLowList():
     openEqualLowDataframe = pd.read_csv('txt/openEqualLow.txt')
-    return openEqualLowDataframe.to_json(orient='records', lines=True, indent=2)
+    return openEqualLowDataframe.to_json(orient='records', indent=2)
 
 
 def getOpenEqualLow(companysymbol, startDate, endDate):
     stockData = get_history(symbol=companysymbol, start=dateUtils.getDate(startDate), end=dateUtils.getDate(endDate))
     openEqualLowData = stockData[stockData["Open"] == stockData["Low"]]
-    return openEqualLowData.reset_index().to_json(orient='records', lines=True, indent=2, index=True, date_format='iso')
+    return openEqualLowData.reset_index().to_json(orient='records', indent=2, index=True, date_format='iso')
